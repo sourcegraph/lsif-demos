@@ -1,0 +1,10 @@
+.idea
+target
+**/spoon.classpath*.tmp
+.classpath
+*.project
+.settings
+*.iml
+.gradle
+examples/**/dump.lsif
+build
