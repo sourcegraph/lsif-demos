@@ -6,4 +6,5 @@ Sourcegraph LSIF documentation: https://docs.sourcegraph.com/user/code_intellige
 
 - [typescript-codeintellify](./typescript-codeintellify/src/hoverifier.ts)
 - [go-mux](./go-mux/mux.go)
+- [java-lsif-java](./java-lsif-java/src/main/java/DocumentIndexer.java)
 - c-cpp-redis WIP
