@@ -3,3 +3,7 @@
 This repository contains a sample project for each supported language https://lsif.dev/
 
 Sourcegraph LSIF documentation: https://docs.sourcegraph.com/user/code_intelligence/lsif
+
+- [typescript-codeintellify](./typescript-codeintellify/src/hoverifier.ts)
+- [go-mux](./go-mux/mux.go)
+- c-cpp-redis WIP
