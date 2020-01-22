@@ -1,0 +1,43 @@
+ query LSPHoverCall {
+
+     # Find document and range matching the parameters
+     matchingRanges(func: has(Repository.label)) @filter(eq(Repository.name, "github.com/sourcegraph/codeintellify")) @normalize {
+         contains @filter(has(Commit.label) and eq(Commit.oid, "426b37cef904b1586b2263b3476d1f345cccb5d8")) {
+             contains @filter(has(Document.label) and eq(Document.path, "src/hoverifier.ts")) {
+                 # TODO: expand nested ranges and sort by size ascending
+                 contains @filter(
+                     has(Range.label) and (
+                         # on start line - make sure character is after startCharacter
+                         (eq(Range.startLine, 606) and le(Range.startCharacter, 61) and (not eq(Range.endLine, 606) or gt(Range.endCharacter, 61))) or
+                         # on end line (but not on start line) - make sure character is before endCharacter
+                         (eq(Range.endLine, 606) and not eq(Range.startLine, 606) and gt(Range.endCharacter, 61)) or
+                         # somewhere in between - character doesn't matter
+                         (lt(Range.startLine, 606) and gt(Range.endLine, 606))
+                     )
+                 ) (first: 1) {
+                     matchingRanges as uid
+                     startLine: Range.startLine
+                     startCharacter: Range.startCharacter
+                     endLine: Range.endLine
+                     endCharacter: Range.endCharacter
+                 }
+             }
+         }
+     }
+     # Recursively walk "next" edges and store all uids in "results"
+     var(func: uid(matchingRanges)) @recurse {
+         results as uid
+         next
+     }
+             # Filter over all found resultSets the ones that have a textDocument/hover edge
+             resultSets(func: uid(results)) @filter(has(<textDocument/hover>)) {
+                 <textDocument/hover> (first: 1) {
+                     result: HoverResult.result {
+                         contents: Hover.contents {
+                             kind: MarkupContent.kind
+                             value: MarkupContent.value
+                         }
+                     }
+                 }
+             }
+         }

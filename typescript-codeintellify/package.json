@@ -1,0 +1,90 @@
+{
+  "name": "@sourcegraph/codeintellify",
+  "version": "0.0.0-DEVELOPMENT",
+  "description": "Adds code intelligence to code views on the web",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sourcegraph/codeintellify"
+  },
+  "license": "MIT",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "files": [
+    "lib"
+  ],
+  "scripts": {
+    "semantic-release": "semantic-release",
+    "prettier": "prettier '**/{*.{js?(on),ts?(x),scss,yml},.*.js?(on),.*.yml}' --write --list-different",
+    "prettier-check": "npm run prettier -- --write=false",
+    "typecheck": "tsc -p tsconfig.json",
+    "tslint": "tslint -c tslint.json -p tsconfig.json './src/*.ts?(x)' './testdata/*.ts?(x)' './*.ts?(x)'",
+    "build": "yarn run tsc && cpy 'src/**/*.scss' lib/",
+    "tsc": "tsc -p tsconfig.dist.json",
+    "test": "TS_NODE_COMPILER_OPTIONS='{\"module\":\"commonjs\"}' karma start",
+    "pretest": "TS_NODE_COMPILER_OPTIONS='{\"module\":\"commonjs\"}' ts-node ./testdata/generate.ts"
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "author": "Felix Becker <felix@sourcegraph.com>",
+  "dependencies": {
+    "@sourcegraph/event-positions": "^1.0.2",
+    "@sourcegraph/extension-api-types": "^2.0.0",
+    "lodash": "^4.17.10",
+    "rxjs": "^6.3.3",
+    "ts-key-enum": "^2.0.0"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^8.2.0",
+    "@commitlint/config-conventional": "^8.2.0",
+    "@sourcegraph/prettierrc": "^3.0.1",
+    "@sourcegraph/tsconfig": "^4.0.0",
+    "@sourcegraph/tslint-config": "^13.4.0",
+    "@types/chai": "4.2.6",
+    "@types/fs-extra": "7.0.0",
+    "@types/karma": "3.0.4",
+    "@types/karma-webpack": "2.0.7",
+    "@types/lodash": "4.14.149",
+    "@types/mocha": "5.2.7",
+    "@types/node": "10.9.4",
+    "@types/sinon": "7.0.13",
+    "@types/webpack": "4.4.32",
+    "@types/webpack-env": "1.14.1",
+    "awesome-typescript-loader": "^5.2.1",
+    "chai": "^4.2.0",
+    "cpy-cli": "^2.0.0",
+    "esm": "^3.2.25",
+    "fs-extra": "^8.0.1",
+    "husky": "^2.4.0",
+    "istanbul-instrumenter-loader": "^3.0.1",
+    "karma": "^4.1.0",
+    "karma-chai": "^0.1.0",
+    "karma-chrome-launcher": "^2.2.0",
+    "karma-coverage-istanbul-reporter": "^2.0.5",
+    "karma-firefox-launcher": "^1.1.0",
+    "karma-mocha": "^1.3.0",
+    "karma-mocha-reporter": "^2.2.5",
+    "karma-sinon": "^1.0.5",
+    "karma-sourcemap-loader": "^0.3.7",
+    "karma-webpack": "^3.0.5",
+    "mocha": "^6.1.4",
+    "prettier": "^1.18.2",
+    "raw-loader": "^3.0.0",
+    "rimraf": "^2.6.3",
+    "semantic-release": "^15.6.3",
+    "sinon": "^7.4.1",
+    "sourcegraph": "^23.0.1",
+    "ts-node": "^8.2.0",
+    "tslint": "^5.20.0",
+    "typescript": "^3.5.1",
+    "webpack": "^4.33.0",
+    "webpack-cli": "^3.3.3"
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -e $HUSKY_GIT_PARAMS"
+    }
+  }
+}
