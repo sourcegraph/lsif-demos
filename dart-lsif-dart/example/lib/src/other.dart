@@ -1,0 +1,1 @@
+var otherVar = 3;

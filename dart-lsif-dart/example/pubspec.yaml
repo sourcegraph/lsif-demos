@@ -1,0 +1,9 @@
+name: hello
+version: 0.4.6
+environment:
+  sdk: '>=2.7.0 <3.0.0'
+dependencies:
+  pub_semver: 1.4.2
+
+dev_dependencies:
+  test: any
