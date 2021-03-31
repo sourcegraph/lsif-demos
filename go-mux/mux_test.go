@@ -9,7 +9,6 @@ import (
 	"bytes"
 	"errors"
 	"fmt"
-	"io/ioutil"
 	"net/http"
 	"net/url"
 	"reflect"
@@ -2775,7 +2774,7 @@ func TestSubrouterCustomMethodNotAllowed(t *testing.T) {
 				tt.Errorf("Expected status code 405 (got %d)", w.Code)
 			}
 
-			b, err := ioutil.ReadAll(w.Body)
+			b, err := io.ReadAll(w.Body)
 			if err != nil {
 				tt.Errorf("failed to read body: %v", err)
 			}
