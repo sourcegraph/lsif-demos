@@ -179,7 +179,7 @@ Code contributions
 -----------------
 
 Note: by contributing code to the Redis project in any form, including sending
-a pull request via Github, a code fragment or patch via private email or
+a pull request via GitHub, a code fragment or patch via private email or
 public discussion groups, you agree to release your code under the terms
 of the BSD license that you can find in the [COPYING][1] file included in the Redis
 source distribution.
@@ -193,7 +193,7 @@ information.
 Redis internals
 ===
 
-If you are reading this README you are likely in front of a Github page
+If you are reading this README you are likely in front of a GitHub page
 or you just untarred the Redis distribution tar ball. In both the cases
 you are basically one step away from the source code, so here we explain
 the Redis source code layout, what is in each file as a general idea, the
