@@ -1,6 +1,5 @@
 import { Position } from '@sourcegraph/extension-api-types'
-import { of } from 'rxjs'
-import { filter, map } from 'rxjs/operators'
+import { filter, map, of } from 'rxjs'
 import { TestScheduler } from 'rxjs/testing'
 
 import { CodeViewProps, DOM } from './testutils/dom'

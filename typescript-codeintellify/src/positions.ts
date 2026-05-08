@@ -1,5 +1,4 @@
-import { from, fromEvent, merge, Observable, Subscribable } from 'rxjs'
-import { filter, map, switchMap, tap } from 'rxjs/operators'
+import { filter, from, fromEvent, map, merge, Observable, Subscribable, switchMap, tap } from 'rxjs'
 import { convertCodeElementIdempotent, DiffPart, DOMFunctions, HoveredToken, locateTarget } from './token_position'
 import { isPosition } from './types'
 

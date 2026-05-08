@@ -1,5 +1,4 @@
-import { of } from 'rxjs'
-import { delay } from 'rxjs/operators'
+import { delay, of } from 'rxjs'
 
 import { ActionsProvider, HoverProvider } from '../hoverifier'
 import { HoverAttachment } from '../types'

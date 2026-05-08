@@ -1,32 +1,30 @@
 import { Position, Range } from '@sourcegraph/extension-api-types'
 import { isEqual } from 'lodash'
 import {
+    catchError,
     combineLatest,
     concat,
+    debounceTime,
+    delay,
+    distinctUntilChanged,
     EMPTY,
+    filter,
     from,
     fromEvent,
+    map,
     merge,
     Observable,
     of,
+    share,
     Subject,
     Subscribable,
     SubscribableOrPromise,
     Subscription,
-    zip,
-} from 'rxjs'
-import {
-    catchError,
-    debounceTime,
-    delay,
-    distinctUntilChanged,
-    filter,
-    map,
-    share,
     switchMap,
     takeUntil,
     withLatestFrom,
-} from 'rxjs/operators'
+    zip,
+} from 'rxjs'
 import { Key } from 'ts-key-enum'
 import { asError, ErrorLike, isErrorLike } from './errors'
 import { scrollIntoCenterIfNeeded } from './helpers'

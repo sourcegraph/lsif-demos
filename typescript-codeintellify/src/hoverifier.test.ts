@@ -1,7 +1,6 @@
 import { Range } from '@sourcegraph/extension-api-types'
 import { isEqual } from 'lodash'
-import { EMPTY, NEVER, Observable, of, Subject, Subscription } from 'rxjs'
-import { delay, distinctUntilChanged, filter, first, map } from 'rxjs/operators'
+import { delay, distinctUntilChanged, EMPTY, filter, first, lastValueFrom, map, NEVER, Observable, of, Subject, Subscription } from 'rxjs'
 import { TestScheduler } from 'rxjs/testing'
 import { ErrorLike } from './errors'
 import { propertyIsDefined } from './helpers'
@@ -784,19 +783,17 @@ describe('Hoverifier', () => {
                     character: 6,
                 })
 
-                await hoverifier.hoverStateUpdates
-                    .pipe(
+                await lastValueFrom(
+                    hoverifier.hoverStateUpdates.pipe(
                         filter(state => !!state.hoverOverlayProps),
                         first()
                     )
-                    .toPromise()
+                )
 
                 codeViewSubscription.unsubscribe()
 
                 assert.strictEqual(hoverifier.hoverState.hoverOverlayProps, undefined)
-                await of(null)
-                    .pipe(delay(200))
-                    .toPromise()
+                await lastValueFrom(of(null).pipe(delay(200)))
                 assert.strictEqual(hoverifier.hoverState.hoverOverlayProps, undefined)
             }
         })
@@ -835,19 +832,17 @@ describe('Hoverifier', () => {
                     character: 6,
                 })
 
-                await hoverifier.hoverStateUpdates
-                    .pipe(
+                await lastValueFrom(
+                    hoverifier.hoverStateUpdates.pipe(
                         filter(state => !!state.hoverOverlayProps),
                         first()
                     )
-                    .toPromise()
+                )
 
                 codeViewSubscription.unsubscribe()
 
                 assert.isDefined(hoverifier.hoverState.hoverOverlayProps)
-                await of(null)
-                    .pipe(delay(200))
-                    .toPromise()
+                await lastValueFrom(of(null).pipe(delay(200)))
                 assert.isDefined(hoverifier.hoverState.hoverOverlayProps)
             }
         })
