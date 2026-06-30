@@ -5,11 +5,11 @@ import (
 	"net/http"
 )
 
-func contextGet(r *http.Request, key interface{}) interface{} {
+func contextGet(r *http.Request, key any) any {
 	return r.Context().Value(key)
 }
 
-func contextSet(r *http.Request, key, val interface{}) *http.Request {
+func contextSet(r *http.Request, key, val any) *http.Request {
 	if val == nil {
 		return r
 	}
