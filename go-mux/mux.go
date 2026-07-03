@@ -10,6 +10,7 @@ import (
 	"net/http"
 	"path"
 	"regexp"
+	"slices"
 )
 
 var (
@@ -30,17 +31,17 @@ func NewRouter() *Router {
 // It implements the http.Handler interface, so it can be registered to serve
 // requests:
 //
-//     var router = mux.NewRouter()
+//	var router = mux.NewRouter()
 //
-//     func main() {
-//         http.Handle("/", router)
-//     }
+//	func main() {
+//	    http.Handle("/", router)
+//	}
 //
 // Or, for Google App Engine, register it in a init() function:
 //
-//     func init() {
-//         http.Handle("/", router)
-//     }
+//	func init() {
+//	    http.Handle("/", router)
+//	}
 //
 // This will send all incoming requests to the router.
 type Router struct {
@@ -444,11 +445,11 @@ func CurrentRoute(r *http.Request) *Route {
 	return nil
 }
 
-func setVars(r *http.Request, val interface{}) *http.Request {
+func setVars(r *http.Request, val any) *http.Request {
 	return contextSet(r, varsKey, val)
 }
 
-func setCurrentRoute(r *http.Request, val interface{}) *http.Request {
+func setCurrentRoute(r *http.Request, val any) *http.Request {
 	return contextSet(r, routeKey, val)
 }
 
@@ -532,12 +533,7 @@ func mapFromPairsToRegex(pairs ...string) (map[string]*regexp.Regexp, error) {
 
 // matchInArray returns true if the given string value is in the array.
 func matchInArray(arr []string, value string) bool {
-	for _, v := range arr {
-		if v == value {
-			return true
-		}
-	}
-	return false
+	return slices.Contains(arr, value)
 }
 
 // matchMapWithString returns true if the given key/value pairs exist in a given map.
@@ -552,13 +548,7 @@ func matchMapWithString(toCheck map[string]string, toMatch map[string][]string, 
 		} else if v != "" {
 			// If value was defined as an empty string we only check that the
 			// key exists. Otherwise we also check for equality.
-			valueExists := false
-			for _, value := range values {
-				if v == value {
-					valueExists = true
-					break
-				}
-			}
+			valueExists := slices.Contains(values, v)
 			if !valueExists {
 				return false
 			}
@@ -580,13 +570,7 @@ func matchMapWithRegex(toCheck map[string]*regexp.Regexp, toMatch map[string][]s
 		} else if v != nil {
 			// If value was defined as an empty string we only check that the
 			// key exists. Otherwise we also check for equality.
-			valueExists := false
-			for _, value := range values {
-				if v.MatchString(value) {
-					valueExists = true
-					break
-				}
-			}
+			valueExists := slices.ContainsFunc(values, v.MatchString)
 			if !valueExists {
 				return false
 			}
